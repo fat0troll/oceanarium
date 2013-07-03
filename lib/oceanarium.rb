@@ -1,3 +1,5 @@
+require "httparty"
+
 require "oceanarium/version"
 
 module Oceanarium
