@@ -3,7 +3,7 @@ require "httparty"
 require "oceanarium/version"
 require "oceanarium/config"
 require "oceanarium/request"
+require "oceanarium/resources"
 
 module Oceanarium
-  # Your code goes here...
 end
