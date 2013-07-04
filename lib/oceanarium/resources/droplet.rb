@@ -1,3 +1,5 @@
+require 'open-uri'
+
 module Oceanarium
   class Droplet
 
@@ -22,9 +24,9 @@ module Oceanarium
     def self.create(name, size_id, image_id, region_id, ssh_key_ids=nil)
       @request = Oceanarium::Request.new
       if ssh_key_ids.nil?
-        @get = @request.get("/droplets/new?name=#{name}&size_id=#{size_id}&image_id=#{image_id}&region_id=#{region_id}")
+        @get = @request.get(URI::encode("/droplets/new?name=#{name}&size_id=#{size_id}&image_id=#{image_id}&region_id=#{region_id}"))
       else
-        @get = @request.get("/droplets/new?name=#{name}&size_id=#{size_id}&image_id=#{image_id}&region_id=#{region_id}&ssh_key_ids=#{ssh_key_ids}")
+        @get = @request.get(URI::encode("/droplets/new?name=#{name}&size_id=#{size_id}&image_id=#{image_id}&region_id=#{region_id}&ssh_key_ids=#{ssh_key_ids}"))
       end
       if @get.parsed_response['status'] == 'OK'
         @get.parsed_response['droplet']['id']
