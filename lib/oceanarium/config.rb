@@ -21,7 +21,7 @@ module Oceanarium
 
     def api_key
       return @api_key if @api_key
-      "You have missed API key. Please, provide it by Oceanarium::Config.api_key = 'your_key'."
+      nil
     end
 
     # Client key getter/setter.
@@ -32,7 +32,7 @@ module Oceanarium
 
     def client_id
       return @client_id if @client_id
-      "You have missed client ID. Please, provide it by Oceanarium::Config.client_id = 'your_id'"
+      nil
     end
   end
 end

@@ -6,4 +6,19 @@ require "oceanarium/request"
 require "oceanarium/resources"
 
 module Oceanarium
+  # Human API roots
+  def self.droplet(id = nil)
+    Oceanarium::Droplet.new(id, Oceanarium::Config.api_key, Oceanarium::Config.client_id)
+  end
+
+  def self.droplets
+    unless Oceanarium::Config.api_key.nil? || Oceanarium::Config.client_id.nil?
+      @droplets = Array.new()
+      Oceanarium::Droplet.all.each do |droplet|
+        @object = Oceanarium::droplet(droplet['id'])
+        @droplets << @object
+      end
+      @droplets
+    end
+  end
 end

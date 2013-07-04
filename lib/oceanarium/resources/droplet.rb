@@ -2,6 +2,93 @@ require 'open-uri'
 
 module Oceanarium
   class Droplet
+    attr_accessor :id, :name, :image_id, :size_id, :region_id, :backups_active, :ip_address, :status, :created_at
+
+    def initialize(id, api_key, config_id)
+      if api_key.nil? || config_id.nil?
+        raise 'No API key/client ID!'
+      else
+        @object = Oceanarium::Droplet.find(id)
+        if @object.nil?
+          self.id = nil
+        else
+          self.id = @object['id']
+          self.name = @object['name']
+          self.image_id = @object['image_id']
+          self.size_id = @object['size_id']
+          self.region_id = @object['region_id']
+          self.backups_active = @object['backups_active']
+          self.ip_address = @object['ip_address']
+          self.status = @object['status']
+          self.created_at = @object['created_at']
+        end
+      end
+    end
+
+    # User API
+
+    def new(name, size_id, image_id, region_id, ssh_key_ids=nil)
+      @new_id = Oceanarium::Droplet.create(name, size_id, image_id, region_id, ssh_key_ids=nil)
+      Oceanarium::droplet(@new_id)
+    end
+
+    def reboot
+      Oceanarium::Droplet::action(self.id, 'reboot')
+    end
+
+    def power_cycle
+      Oceanarium::Droplet::action(self.id, 'power_cycle')
+    end
+
+    def shutdown
+      Oceanarium::Droplet::action(self.id, 'shutdown')
+    end
+
+    def power_off
+      Oceanarium::Droplet::action(self.id, 'power_off')
+    end
+
+    def power_on
+      Oceanarium::Droplet::action(self.id, 'power_on')
+    end
+
+    def password_reset
+      Oceanarium::Droplet::action(self.id, 'password_reset')
+    end
+
+    def resize(size_id)
+      Oceanarium::Droplet.resize(self.id, size_id)
+    end
+
+    def snapshot(name)
+      Oceanarium::Droplet.snapshot(self.id, name)
+    end
+
+    def restore(image_id)
+      Oceanarium::Droplet.restore(self.id, image_id)
+    end
+
+    def rebuild(image_id)
+      Oceanarium::Droplet.rebuild(self.id, image_id)
+    end
+
+    def enable_backups
+      Oceanarium::Droplet::action(self.id, 'enable_backups')
+    end
+
+    def disable_backups
+      Oceanarium::Droplet::action(self.id, 'disable_backups')
+    end
+
+    def rename(new_name)
+      Oceanarium::Droplet.rename(self.id, new_name)
+    end
+
+    def destroy
+      Oceanarium::Droplet::action(self.id, 'destroy')
+    end
+
+    # Core API
 
     def self.all
       # Returns all Droplets in Array. Each Droplet is a Hash
