@@ -2,11 +2,15 @@ module Oceanarium
   class Image
     attr_accessor :id, :name, :slug, :distribution
 
-    def initialize(id, api_key, client_id)
+    def initialize(option, api_key, client_id)
       if api_key.nil? || client_id.nil?
         raise 'No API key/client ID!'
       else
-        @object = Oceanarium::Image.find(id)
+        if option.is_a?(Hash)
+          @object = option
+        else
+          @object = Oceanarium::Image.find(option)
+        end
         if @object.nil?
           self.id = nil
         else

@@ -4,11 +4,15 @@ module Oceanarium
   class Droplet
     attr_accessor :id, :name, :image_id, :size_id, :region_id, :backups_active, :ip_address, :status, :created_at
 
-    def initialize(id, api_key, config_id)
+    def initialize(option, api_key, config_id)
       if api_key.nil? || config_id.nil?
         raise 'No API key/client ID!'
       else
-        @object = Oceanarium::Droplet.find(id)
+        if option.is_a?(Hash)
+          @object = option
+        else
+          @object = Oceanarium::Droplet.find(option)
+        end
         if @object.nil?
           self.id = nil
         else
