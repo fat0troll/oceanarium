@@ -28,12 +28,24 @@ module Oceanarium
   end
 
   # TODO: optimize
-  def self.images
+  def self.images(scope = nil)
     unless Oceanarium::Config.api_key.nil? || Oceanarium::Config.client_id.nil?
       @images = Array.new()
-      Oceanarium::Image.all.each do |image|
-        @object = Oceanarium::image(image['id'])
-        @images << @object
+      if scope.nil?
+        Oceanarium::Image.all.each do |image|
+          @object = Oceanarium::image(image['id'])
+          @images << @object
+        end
+      elsif scope == 'global'
+        Oceanarium::Image.global.each do |image|
+          @object = Oceanarium::image(image['id'])
+          @images << @object
+        end
+      elsif scope == 'my_images'
+        Oceanarium::Image.local.each do |image|
+          @object = Oceanarium::image(image['id'])
+          @images << @object
+        end
       end
     end
     @images
