@@ -1,5 +1,34 @@
 module Oceanarium
   class Image
+    attr_accessor :id, :name, :slug, :distribution
+
+    def initialize(id, api_key, client_id)
+      if api_key.nil? || client_id.nil?
+        raise 'No API key/client ID!'
+      else
+        @object = Oceanarium::Image.find(id)
+        if @object.nil?
+          self.id = nil
+        else
+          self.id = @object['id']
+          self.name = @object['name']
+          self.slug = @object['slug']
+          self.distribution = @object['distribution']
+        end
+      end
+    end
+
+    # User API
+
+    def destroy
+      Oceanarium::Image.destroy(self.id)
+    end
+
+    def transfer(region_id)
+      Oceanarium::Image.transfer(self.id, region_id)
+    end
+
+    # Core API
 
     def self.all
       # Returns all avaliable images in Array
