@@ -86,4 +86,30 @@ module Oceanarium
       @domains
     end
   end
+
+  # /sizes/
+
+  def self.sizes
+    unless Oceanarium::Config.api_key.nil? || Oceanarium::Config.client_id.nil?
+      @sizes = Array.new()
+      Oceanarium::Size.all.each do |size|
+        @object = Oceanarium::Size.new(size, Oceanarium::Config.api_key, Oceanarium::Config.client_id)
+        @sizes << @object
+      end
+      @sizes
+    end
+  end
+
+  # /regions/
+
+  def self.regions
+    unless Oceanarium::Config.api_key.nil? || Oceanarium::Config.client_id.nil?
+      @regions = Array.new
+      Oceanarium::Region.all.each do |region|
+        @object = Oceanarium::Region.new(region, Oceanarium::Config.api_key, Oceanarium::Config.client_id)
+        @regions << @object
+      end
+      @regions
+    end
+  end
 end
