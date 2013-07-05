@@ -69,4 +69,21 @@ module Oceanarium
       @keys
     end
   end
+
+  # /domains/
+
+  def self.domain(id = nil)
+    Oceanarium::Domain.new(id, Oceanarium::Config.api_key, Oceanarium::Config.client_id)
+  end
+
+  def self.domains
+    unless Oceanarium::Config.api_key.nil? || Oceanarium::Config.client_id.nil?
+      @domains = Array.new()
+      Oceanarium::Domain.all.each do |domain|
+        @object = Oceanarium::Domain.new(domain, Oceanarium::Config.api_key, Oceanarium::Config.client_id)
+        @domains << @object
+      end
+      @domains
+    end
+  end
 end

@@ -33,7 +33,9 @@ module Oceanarium
 
     def new(name, size_id, image_id, region_id, ssh_key_ids=nil)
       @new_id = Oceanarium::Droplet.create(name, size_id, image_id, region_id, ssh_key_ids=nil)
-      Oceanarium::droplet(@new_id)
+      unless @new_id == 'ERROR'
+        Oceanarium::droplet(@new_id)
+      end
     end
 
     def reboot
