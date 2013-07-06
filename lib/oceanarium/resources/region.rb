@@ -1,6 +1,6 @@
 module Oceanarium
   class Region
-    attr_accessor :id, :name
+    attr_accessor :id, :name, :slug
 
     def initialize(option, api_key, client_id)
       if api_key.nil? || client_id.nil?
@@ -14,6 +14,7 @@ module Oceanarium
         else
           self.id = @object['id']
           self.name = @object['name']
+          self.slug = @object['slug']
         end
       end
     end
