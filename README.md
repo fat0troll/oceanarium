@@ -8,22 +8,30 @@ Warning: We're not affiliated with Digital Ocean, so we can't guarantee that API
 
 Add this line to your application's Gemfile:
 
-    gem 'oceanarium'
+~~~ruby
+gem 'oceanarium'
+~~~
 
 And then execute:
 
-    $ bundle
+~~~bash
+$ bundle
+~~~
 
 Or install it yourself as:
 
-    $ gem install oceanarium
+~~~bash
+$ gem install oceanarium
+~~~
 
 ## Usage
 
 DigitalOcean uses for authentication two keys: API key and Client ID. Before any action you must provide it to current ruby process. In command line you must enter this:
 
-    Oceanarium::Config.api_key = "your_api_key"
-    Oceanarium::Config.client_id = "your_client_id"
+~~~ruby
+Oceanarium::Config.api_key = "your_api_key"
+Oceanarium::Config.client_id = "your_client_id"
+~~~
 
 Now you're ready to use Digital Ocean API. If you using Oceanarium with Rails, you must add file config/initializers/oceanarium.rb with same two lines, as above.
 
@@ -31,11 +39,15 @@ After this, you can use any Digital Ocean API with this gem. All API callers are
 
 For example:
 
-    Oceanarium::droplet(100500)
+~~~ruby
+Oceanarium::droplet(100500)
+~~~
 
 will return you all droplet information, and
 
-    Oceanarium::droplet(100500).reboot
+~~~ruby
+Oceanarium::droplet(100500).reboot
+~~~
 
 will reboot it.
 
