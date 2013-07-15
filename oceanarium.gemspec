@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["iam@toofat.ru"]
   spec.description   = %q{Digital Ocean API wrapper for Ruby/Rails applications}
   spec.summary       = %q{Smart and tiny Digital Ocean API wrapper for Ruby/Rails. For all dirty work used httparty.}
-  spec.homepage      = "http://delta-zet.com"
+  spec.homepage      = "http://oceanarium.so"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
