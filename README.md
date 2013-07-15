@@ -39,7 +39,7 @@ will return you all droplet information, and
 
 will reboot it.
 
-And so on, and so on, and so on, and... read the official gem documentation for more verbose help.
+And so on, and so on, and so on, and... read the official gem documentation at http://oceanarium.so for more verbose help.
 
 ## Contributing
 
