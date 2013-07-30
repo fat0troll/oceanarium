@@ -35,7 +35,7 @@ module Oceanarium
     def edit(key)
       @update = Oceanarium::SSHKey.update(self.id, key)
       unless @update.nil?
-        Oceanarium::ssh_key(@update['id'])
+        Oceanarium::ssh_key(self.id)
       end
     end
 
