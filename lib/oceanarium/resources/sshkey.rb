@@ -26,7 +26,7 @@ module Oceanarium
     # User API
 
     def new(name, key)
-      @new_id = Oceanarium::SSHKey.create(name, id)
+      @new_id = Oceanarium::SSHKey.create(name, key)
       unless @new_id == 'ERROR'
         Oceanarium::ssh_key(@new_id)
       end
