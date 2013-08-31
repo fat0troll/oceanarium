@@ -9,7 +9,7 @@ module Oceanarium
         if option.is_a?(Hash)
           @object = option
         else
-          @object = Oceanarium::Image.find(option)
+          @object = Oceanarium::Event.find(option)
         end
         if @object.nil?
           self.id = nil
