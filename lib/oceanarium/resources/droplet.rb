@@ -2,7 +2,7 @@ require 'open-uri'
 
 module Oceanarium
   class Droplet
-    attr_accessor :id, :name, :image_id, :size_id, :region_id, :backups_active, :ip_address, :status, :created_at
+    attr_accessor :id, :name, :image_id, :size_id, :region_id, :backups_active, :ip_address, :locked, :status, :created_at
 
     def initialize(option, api_key, config_id)
       if api_key.nil? || config_id.nil?
