@@ -150,7 +150,7 @@ module Oceanarium
         'Error'
       else
         @get = @request.get("/droplets/#{id}/resize?size_id=#{size_id}")
-        [@get.parsed_response['status'], @get.parsed_response['event_id']
+        [@get.parsed_response['status'], @get.parsed_response['event_id']]
       end
     end
 
