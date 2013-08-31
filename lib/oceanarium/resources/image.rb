@@ -83,7 +83,7 @@ module Oceanarium
     def self.transfer(id, region_id)
       @request = Oceanarium::Request.new
       @get = @request.get("/images/#{id}/transfer/?region_id=#{region_id}")
-      @get.parsed_response['status']
+      [@get.parsed_response['status'], @get.parsed_response['event_id']]
     end
   end
 end
