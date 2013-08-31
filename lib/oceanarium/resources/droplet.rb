@@ -23,6 +23,7 @@ module Oceanarium
           self.region_id = @object['region_id']
           self.backups_active = @object['backups_active']
           self.ip_address = @object['ip_address']
+          self.locked = @object['locked']
           self.status = @object['status']
           self.created_at = @object['created_at']
         end
@@ -33,8 +34,8 @@ module Oceanarium
 
     def new(name, size_id, image_id, region_id, ssh_key_ids=nil)
       @new_id = Oceanarium::Droplet.create(name, size_id, image_id, region_id, ssh_key_ids=nil)
-      unless @new_id == 'ERROR'
-        Oceanarium::droplet(@new_id)
+      unless @new_id['status'] == 'ERROR'
+        [Oceanarium::droplet(@new_id['droplet']['id']), @new_id['droplet']['event_id']]
       end
     end
 
@@ -122,9 +123,9 @@ module Oceanarium
         @get = @request.get(URI::encode("/droplets/new?name=#{name}&size_id=#{size_id}&image_id=#{image_id}&region_id=#{region_id}&ssh_key_ids=#{ssh_key_ids}"))
       end
       if @get.parsed_response['status'] == 'OK'
-        @get.parsed_response['droplet']['id']
+        @get.parsed_response
       else
-        @get.parsed_response['status']
+        @get.parsed_response
       end
     end
 
@@ -134,7 +135,7 @@ module Oceanarium
       if @approved_actions.include? action
         @request = Oceanarium::Request.new
         @get = @request.get("/droplets/#{id}/#{action}")
-        @get.parsed_response['status']
+        return [@get.parsed_response['status'], @get.parsed_response['event_id']]
       else
         'ERROR'
       end
@@ -149,7 +150,7 @@ module Oceanarium
         'Error'
       else
         @get = @request.get("/droplets/#{id}/resize?size_id=#{size_id}")
-        @get.parsed_response['status']
+        [@get.parsed_response['status'], @get.parsed_response['event_id']
       end
     end
 
@@ -157,35 +158,35 @@ module Oceanarium
       # Renames Droplet. Name must be FQDN. Returns OK or Error
       @request = Oceanarium::Request.new
       @get = @request.get("/droplets/#{id}/rename/?name=#{name}")
-      @get.parsed_response['status']
+      [@get.parsed_response['status'], @get.parsed_response['event_id']]
     end
 
     def self.snapshot(id, name)
       # Makes snapshot of Droplet. Returns OK or Error
       @request = Oceanarium::Request.new
       @get = @request.get("/droplets/#{id}/snapshot?name=#{name}")
-      @get.parsed_response['status']
+      [@get.parsed_response['status'], @get.parsed_response['event_id']]
     end
 
     def self.restore(id, image_id)
       # Restores snapshot of Droplet. Returns OK or Error
       @request = Oceanarium::Request.new
       @get = @request.get("/droplets/#{id}/restore/?image_id=#{image_id}")
-      @get.parsed_response['status']
+      [@get.parsed_response['status'], @get.parsed_response['event_id']]
     end
 
     def self.rebuild(id, image_id)
       # Rebuild OS image on Droplet. Returns OK or Error
       @request = Oceanarium::Request.new
       @get = @request.get("/droplets/#{id}/rebuild/?image_id=#{image_id}")
-      @get.parsed_response['status']
+      [@get.parsed_response['status'], @get.parsed_response['event_id']]
     end
 
     def self.destroy(id)
       # Destroys Droplet
       @request = Oceanarium::Request.new
       @get = @request.get("/droplets/#{id}/destroy/")
-      @get.parsed_response['status']
+      [@get.parsed_response['status'], @get.parsed_response['event_id']]
     end
   end
 end
