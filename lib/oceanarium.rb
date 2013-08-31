@@ -112,4 +112,10 @@ module Oceanarium
       @regions
     end
   end
+
+  # /events/
+
+  def self.event(id = nil)
+    Oceanarium::Event.new(id, Oceanarium::Config.api_key, Oceanarium::Config.client_id)
+  end
 end
