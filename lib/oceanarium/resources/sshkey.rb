@@ -1,5 +1,5 @@
 require 'open-uri'
-require 'uri-handler'
+require 'cgi'
 
 module Oceanarium
   class SSHKey
@@ -58,7 +58,7 @@ module Oceanarium
     def self.create(name, key)
       # Creates ssh_key
       @request = Oceanarium::Request.new
-      @get = @request.get(URI::encode("/ssh_keys/new?name=#{name.to_s.to_uri}&ssh_pub_key=#{key.to_s.to_uri}"))
+      @get = @request.get("/ssh_keys/new?name=#{CGI::escape(name.to_s)}&ssh_pub_key=#{CGI::escape(key.to_s)}")
       if @get.parsed_response['status'] == 'OK'
         @get.parsed_response['ssh_key']['id']
       else
